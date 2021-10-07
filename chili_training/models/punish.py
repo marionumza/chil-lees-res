@@ -22,6 +22,6 @@ class Award(models.Model):
     company_id = fields.Many2one('res.company',
                                  default=lambda self: self.employee_id.company_id)
     currency_id = fields.Many2one('res.currency', string='Currency', related='company_id.currency_id')
-class punid=shtype(models.Model):
+class punishtype(models.Model):
     _name = "employee.punish.type"
     name = fields.Char(string="Name")
