@@ -146,8 +146,8 @@ class zkMachine(models.Model):
 
         _logger.info('Fetching cron Attendance From Device')
 
-        for rec in self :
-            rec.download_attendance()
+
+        self.download_attendance()
 
     def download_attendance(self):
         _logger.info('get Attendance From Device')
