@@ -142,7 +142,10 @@ class zkMachine(models.Model):
                     raise UserError(_('Successful connection:  "%s".') %
                             (attendances))
     
-    
+    def crone_download_attendance(self):
+        print('ahmed khalil')
+        for rec in self :
+            rec.download_attendance()
     def download_attendance(self):
         users  = self.env['res.users']
         attendance_obj =  self.env["hr.attendance"]

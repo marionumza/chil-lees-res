@@ -11,7 +11,8 @@
 				"wizard/zk_create_users_wizard.xml",
 				"views/biometric_machine_view.xml",
 				"secuirty/res_groups.xml",
-				"secuirty/ir.model.access.csv"
+				"secuirty/ir.model.access.csv",
+        "data/download_dat.xml"
 			],
 	'images': ['static/images/zk_screenshot.gif'],
     "active": True,
