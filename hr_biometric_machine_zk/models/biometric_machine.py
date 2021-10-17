@@ -143,10 +143,15 @@ class zkMachine(models.Model):
                             (attendances))
     
     def crone_download_attendance(self):
-        print('ahmed khalil')
+
+        _logger.info('Fetching cron Attendance From Device')
+
         for rec in self :
             rec.download_attendance()
+
     def download_attendance(self):
+        _logger.info('get Attendance From Device')
+
         users  = self.env['res.users']
         attendance_obj =  self.env["hr.attendance"]
         employee_location_line_obj = self.env["zk.employee.location.line"]
