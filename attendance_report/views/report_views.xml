@@ -5,7 +5,7 @@
                 string="Print Attendance Report"
                 name="attendance_report.print_attendance_report_template"
                 file="attendance_report.print_attendance_report_template"
-                report_type="qweb-html"
+                report_type="qweb-pdf"
                 menu="False"
         />
     </data>
