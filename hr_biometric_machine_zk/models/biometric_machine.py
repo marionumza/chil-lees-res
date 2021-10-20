@@ -178,11 +178,13 @@ class zkMachine(models.Model):
                         date = tz.normalize(tz.localize(date1)).astimezone(pytz.utc).strftime ("%Y-%m-%d %H:%M:%S")
                         attend_id = False
                         print(employee_id.name, date, date1, attendance.punch)
-                        if not attendance.punch:
+                        if  attendance.punch:
+                            print('FIRST')
                             attendance_id = attendance_obj.search([('employee_id','=',employee_id.id),('check_in','=',str(date))])
                             if not attendance_id:
                                 attend_id = attendance_obj.create({'check_in':date,'employee_id':employee_id.id})
-                        if attendance.punch:
+                        if True :
+                            print('aeeeeeee')
                             attendance_id = attendance_obj.search([('employee_id','=',employee_id.id),('check_out','=',str(date))])
                             if not attendance_id:
                                 attendance_ids = attendance_obj.search([('employee_id','=',employee_id.id),('check_in','<',str(date))],order='check_in')
@@ -191,12 +193,14 @@ class zkMachine(models.Model):
                                     for att in reversed(attendance_ids):
                                         if datetime.datetime.strptime(str(att.check_in), '%Y-%m-%d %H:%M:%S').date() == datetime.datetime.strptime(str(date), '%Y-%m-%d %H:%M:%S').date():
                                             att.write({'check_out':date})
+                                            print('KHALL')
                                             found = True
                                             break
                                         attendance_id = attendance_obj.search([('employee_id','=',employee_id.id),('check_in','=',str(date))])
                                         if not attendance_id:
                                             attend_id = attendance_obj.create({'check_in':date,'check_out':date,'employee_id':employee_id.id})
                                 else:
+                                    print('CRATE')
                                     attend_id = attendance_obj.create({'check_out':date,'employee_id':employee_id.id})
                         print(attend_id)
             except Exception as e:
