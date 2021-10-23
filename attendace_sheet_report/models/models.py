@@ -9,8 +9,8 @@ class AttendanceInherit(models.Model):
 
     work_from = fields.Float(string="Work From",  required=False,compute="_compute_work_from" )
     work_to = fields.Float(string="Work To",  required=False,compute="_compute_work_to" )
-    # late = fields.Float(string="Late",  required=False, )
-    late = fields.Float(string="Late",  required=False,compute="_compute_late" )
+    late = fields.Float(string="Late",  required=False, )
+    # late = fields.Float(string="Late",  required=False,compute="_compute_late" )
 
 
     @api.depends('work_from')
@@ -56,5 +56,6 @@ class AttendanceInherit(models.Model):
         _logger.info(check_in_float)
         _logger.info(self.work_from)
         if self.work_from<check_in_float:
+            _logger.info(check_in_float-self.work_from)
             self.late=check_in_float-self.work_from
 
