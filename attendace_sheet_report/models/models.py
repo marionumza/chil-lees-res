@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-
+import logging
 from odoo import models, fields, api
+_logger = logging.getLogger(__name__)
 
 class AttendanceInherit(models.Model):
 
@@ -38,9 +39,13 @@ class AttendanceInherit(models.Model):
             check_in_float = float(str(rec.check_in.hour)+'.'+str(rec.check_in.minute))
             print(check_in_float)
             print(rec.work_from  )
+            _logger.info(check_in_float)
+            _logger.info(check_in_float - rec.work_from)
             if check_in_float>rec.work_from:
+                _logger.info("yes")
+                # _logger.info(check_in_float-rec.work_from)
 
-                print(check_in_float-rec.work_from)
+                # print(check_in_float-rec.work_from)
                 rec.late=check_in_float-rec.work_from
             else:
                 rec.late=0
