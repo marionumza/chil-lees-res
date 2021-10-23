@@ -48,7 +48,7 @@ class HrAttendance(models.Model):
 
                             work_from = schedule.hour_from
                             _logger.info(work_from)
-                            work_from = schedule.hour_from+5
+                            work_from = schedule.hour_from
                             _logger.info(work_from)
                             _logger.info('--------')
 
