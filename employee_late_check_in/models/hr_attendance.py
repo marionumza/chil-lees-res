@@ -25,6 +25,8 @@ from datetime import datetime, timedelta, date
 from pytz import timezone, UTC
 import pytz
 from odoo import models, fields, api
+import  logging
+_logger = logging.getLogger(__name__)
 
 
 class HrAttendance(models.Model):
@@ -37,24 +39,31 @@ class HrAttendance(models.Model):
 
             rec.late_check_in = 0.0
             if rec.sudo().check_in:
-                print(rec.check_in,';;;;')
+                _logger.info(rec.check_in,'checkin')
                 week_day = rec.sudo().check_in.weekday()
                 if rec.employee_id.contract_id:
                     work_schedule = rec.sudo().employee_id.contract_id.resource_calendar_id
                     for schedule in work_schedule.sudo().attendance_ids:
                         if   schedule.day_period == 'morning':
+
+                            work_from = schedule.hour_from
+                            _logger.info(work_from)
                             work_from = schedule.hour_from+5
-                            print(work_from)
+                            _logger.info(work_from)
+                            _logger.info('--------')
+
                             result = '{0:02.0f}:{1:02.0f}'.format(*divmod(work_from * 60, 60))
 
                             user_tz = self.env.user.tz
-                            print(user_tz,'lllllll')
+                            _logger.info(user_tz,'lllllll')
                             dt = rec.check_in
 
+                            _logger(dt,'dt')
                             dt = rec.check_in + timedelta(hours=2)
-                            print(dt,'ddd')
+                            _logger.info(dt,'ddd')
+                            _logger.info('----')
                             str_time = dt.strftime("%H:%M")
-                            print(str_time,'str_time')
+                            _logger.info(str_time,'str_time')
                             check_in_date = datetime.strptime(str_time, "%H:%M").time()
 
                             start_date = datetime.strptime(result, "%H:%M").time()
