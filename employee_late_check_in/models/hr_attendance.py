@@ -38,6 +38,7 @@ class HrAttendance(models.Model):
         for rec in self:
 
             rec.late_check_in = 0.0
+            _logger.info(rec.check_in,'rec.check_in')
             if rec.sudo().check_in:
                 _logger.info(rec.check_in,'checkin')
                 week_day = rec.sudo().check_in.weekday()
