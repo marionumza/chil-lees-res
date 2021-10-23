@@ -46,7 +46,7 @@ class HrAttendance(models.Model):
                 if rec.employee_id.contract_id:
                     work_schedule = rec.sudo().employee_id.contract_id.resource_calendar_id
                     for schedule in work_schedule.sudo().attendance_ids:
-                        if   schedule.day_period == 'morning':
+                        if   schedule.day_period == 'morning' or schedule.day_period == 'afternoon' :
 
                             work_from = schedule.hour_from
                             _logger.info(work_from)
