@@ -55,4 +55,6 @@ class AttendanceInherit(models.Model):
         # self.late = check_in_float - self.work_from
         _logger.info(check_in_float)
         _logger.info(self.work_from)
+        if self.work_from<check_in_float:
+            self.late=check_in_float-self.work_from
 
