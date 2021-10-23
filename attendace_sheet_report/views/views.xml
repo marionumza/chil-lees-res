@@ -22,7 +22,6 @@
                     <field name="work_from" widget="float_time"/>
                     <field name="work_to" widget="float_time"/>
                     <field name="late" widget="float_time"/>
-                    <button name="compute_late" type="object" string="compute late"/>
                 </field>
             </field>
         </record>
