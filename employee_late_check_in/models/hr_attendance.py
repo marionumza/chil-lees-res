@@ -58,7 +58,7 @@ class HrAttendance(models.Model):
                             _logger.info(user_tz,'lllllll')
                             dt = rec.check_in
 
-                            _logger(dt,'dt')
+                            _logger.info(dt,'dt')
                             dt = rec.check_in + timedelta(hours=2)
                             _logger.info(dt,'ddd')
                             _logger.info('----')
