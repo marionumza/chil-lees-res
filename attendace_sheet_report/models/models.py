@@ -49,3 +49,9 @@ class AttendanceInherit(models.Model):
                 rec.late=check_in_float-rec.work_from
             else:
                 rec.late=0
+    def compute_late(self):
+        check_in_float = float(str(self.check_in.hour) + '.' + str(self.check_in.minute))
+        _logger.info(check_in_float)
+        _logger.info((self.work_from)
+
+        self.late = check_in_float-self.work_from
