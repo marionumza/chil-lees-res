@@ -19,8 +19,9 @@
             <field name="inherit_id" ref="hr_attendance.view_attendance_tree"/>
             <field name="arch" type="xml">
                 <field name="check_out" position="after">
-                    <field name="work_from" options="{'no_create': True}"/>
-                    <field name="work_to" options="{'no_create': True}"/>
+                    <field name="work_from" widget="float_time"/>
+                    <field name="work_to" widget="float_time"/>
+                    <field name="late" widget="float_time"/>
                 </field>
             </field>
         </record>
