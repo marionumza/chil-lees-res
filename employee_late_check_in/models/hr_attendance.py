@@ -61,7 +61,7 @@ class HrAttendance(models.Model):
                             dt = rec.check_in
 
                             _logger.info(dt)
-                            dt = rec.check_in + timedelta(hours=2)
+                            dt = rec.check_in + timedelta(hours=3)
                             _logger.info(dt)
                             _logger.info('----')
                             str_time = dt.strftime("%H:%M")
