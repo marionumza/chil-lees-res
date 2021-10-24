@@ -150,10 +150,8 @@ class zkMachine(models.Model):
         self.download_attendance()
 
     def download_attendance(self):
-        _logger.info('get Attendance From Device')
-
-        users  = self.env['res.users']
-        attendance_obj =  self.env["hr.attendance"]
+        users = self.env['res.users']
+        attendance_obj = self.env["hr.attendance"]
         employee_location_line_obj = self.env["zk.employee.location.line"]
         user = self.env.user
         if not user.partner_id.tz:
@@ -170,38 +168,45 @@ class zkMachine(models.Model):
                 attendances = conn.get_attendance()
                 print(attendances)
                 for attendance in attendances:
-                    employee_location_line = employee_location_line_obj.search([("zk_num", "=", int(attendance.user_id)),('location_id','=',machine.location_id.id),('machine_id','=',machine.id)])
+                    employee_location_line = employee_location_line_obj.search(
+                        [("zk_num", "=", int(attendance.user_id)), ('location_id', '=', machine.location_id.id),
+                         ('machine_id', '=', machine.id)])
                     if employee_location_line:
                         employee_id = employee_location_line.employee_id
                         date = attendance.timestamp
-                        date1 =datetime.datetime.strptime(str(date), DEFAULT_SERVER_DATETIME_FORMAT)
-                        date = tz.normalize(tz.localize(date1)).astimezone(pytz.utc).strftime ("%Y-%m-%d %H:%M:%S")
+                        date1 = datetime.datetime.strptime(str(date), DEFAULT_SERVER_DATETIME_FORMAT)
+                        date = tz.normalize(tz.localize(date1)).astimezone(pytz.utc).strftime("%Y-%m-%d %H:%M:%S")
                         attend_id = False
                         print(employee_id.name, date, date1, attendance.punch)
-                        if  attendance.punch:
-                            print('FIRST')
-                            attendance_id = attendance_obj.search([('employee_id','=',employee_id.id),('check_in','=',str(date))])
+                        if not attendance.punch:
+                            attendance_id = attendance_obj.search(
+                                [('employee_id', '=', employee_id.id), ('check_in', '=', str(date))])
                             if not attendance_id:
-                                attend_id = attendance_obj.create({'check_in':date,'employee_id':employee_id.id})
-                        if True :
-                            print('aeeeeeee')
-                            attendance_id = attendance_obj.search([('employee_id','=',employee_id.id),('check_out','=',str(date))])
+                                attend_id = attendance_obj.create({'check_in': date, 'employee_id': employee_id.id})
+                        if attendance.punch:
+                            attendance_id = attendance_obj.search(
+                                [('employee_id', '=', employee_id.id), ('check_out', '=', str(date))])
                             if not attendance_id:
-                                attendance_ids = attendance_obj.search([('employee_id','=',employee_id.id),('check_in','<',str(date))],order='check_in')
+                                attendance_ids = attendance_obj.search(
+                                    [('employee_id', '=', employee_id.id), ('check_in', '<', str(date))],
+                                    order='check_in')
                                 if attendance_ids:
                                     found = False
                                     for att in reversed(attendance_ids):
-                                        if datetime.datetime.strptime(str(att.check_in), '%Y-%m-%d %H:%M:%S').date() == datetime.datetime.strptime(str(date), '%Y-%m-%d %H:%M:%S').date():
-                                            att.write({'check_out':date})
-                                            print('KHALL')
+                                        if datetime.datetime.strptime(str(att.check_in),
+                                                                      '%Y-%m-%d %H:%M:%S').date() == datetime.datetime.strptime(
+                                                str(date), '%Y-%m-%d %H:%M:%S').date():
+                                            att.write({'check_out': date})
                                             found = True
                                             break
-                                        attendance_id = attendance_obj.search([('employee_id','=',employee_id.id),('check_in','=',str(date))])
+                                        attendance_id = attendance_obj.search(
+                                            [('employee_id', '=', employee_id.id), ('check_in', '=', str(date))])
                                         if not attendance_id:
-                                            attend_id = attendance_obj.create({'check_in':date,'check_out':date,'employee_id':employee_id.id})
+                                            attend_id = attendance_obj.create(
+                                                {'check_in': date, 'check_out': date, 'employee_id': employee_id.id})
                                 else:
-                                    print('CRATE')
-                                    attend_id = attendance_obj.create({'check_out':date,'employee_id':employee_id.id})
+                                    attend_id = attendance_obj.create(
+                                        {'check_out': date, 'employee_id': employee_id.id})
                         print(attend_id)
             except Exception as e:
                 raise UserError('The connection has not been achieved: %s' % (e))
@@ -209,9 +214,8 @@ class zkMachine(models.Model):
                 if conn:
                     conn.enable_device()
                     conn.disconnect()
-            
-                    
-                
+
+
 class HrAttendance(models.Model):
     _inherit = "hr.attendance"
     

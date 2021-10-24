@@ -2,15 +2,28 @@
 <odoo>
     <data>
         <record id="hr_contract_form_view_inherit1" model="ir.ui.view">
-        <field name="name">hr.contract.view.form.inherit1</field>
-        <field name="model">hr.contract</field>
-        <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
-        <field name="arch" type="xml">
-            <xpath expr="//field[@name='wage']" position="after">
-                <field name="curr"/>
-            </xpath>
-        </field>
-    </record>
+            <field name="name">hr.contract.view.form.inherit1</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='wage']" position="after">
+                    <field name="curr"/>
+                </xpath>
+            </field>
+        </record>
+        <!-- Inherit Form View to Modify it -->
+        <record id="inherited_hr_employee_form_view_added_field1"
+                model="ir.ui.view">
+            <field name="name">inherited.hr.employee.form.view.added.field1</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="pre_job"/>
+                </xpath>
+
+            </field>
+        </record>
 
     </data>
 </odoo>

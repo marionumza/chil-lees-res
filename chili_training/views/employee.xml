@@ -5,8 +5,7 @@
         <!-- Inherit Form View to Modify it -->
         <record id="inherited_hr_employee_form_view_added_field"
                 model="ir.ui.view">
-            <field name="name">inherited.hr.employee.form.view.added.field
-            </field>
+            <field name="name">inherited.hr.employee.form.view.added.field</field>
             <field name="model">hr.employee</field>
             <field name="inherit_id" ref="hr.view_employee_form"/>
             <field name="arch" type="xml">
@@ -78,8 +77,14 @@
                     </page>
 
                 </notebook>
+                <xpath expr="//field[@name='study_school']" position="after">
+
+                    <field name="pre_job"/>
+
+                </xpath>
             </field>
         </record>
+
 
     </data>
 </odoo>

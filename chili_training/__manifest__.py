@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "chili_training",
+    'name': "chili_trainoooooooing",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
