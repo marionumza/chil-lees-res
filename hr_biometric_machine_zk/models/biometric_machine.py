@@ -178,11 +178,36 @@ class zkMachine(models.Model):
                         date = tz.normalize(tz.localize(date1)).astimezone(pytz.utc).strftime("%Y-%m-%d %H:%M:%S")
                         attend_id = False
                         print(employee_id.name, date, date1, attendance.punch)
+                        print("---------")
                         if not attendance.punch:
                             attendance_id = attendance_obj.search(
                                 [('employee_id', '=', employee_id.id), ('check_in', '=', str(date))])
-                            if not attendance_id:
-                                attend_id = attendance_obj.create({'check_in': date, 'employee_id': employee_id.id})
+                            checkout=attendance_obj.search(
+                                [('employee_id', '=', employee_id.id), ('check_out', '=', str(date))])
+                            only_checkin=attendance_obj.search(
+                                [('employee_id', '=', employee_id.id), ('check_in', '!=', None),('check_out', '=', None)])
+
+                            print("--------------")
+                            print(attendance_id)
+                            print(checkout)
+                            print(only_checkin)
+                            print(date)
+                            checked_id = attendance_obj.search(
+                                [('employee_id', '=', employee_id.id)])
+                            booli=False
+                            print(booli)
+                            if not booli:
+                                if not attendance_id and not checkout and not only_checkin:
+                                    print("here")
+                                    attend_id = attendance_obj.create({'check_in': date, 'employee_id': employee_id.id})
+                                elif only_checkin and not  attendance_id and not checkout :
+                                    print("llllllllllllllllllllll")
+                                    only_checkin.write({'check_out': date})
+                                    # attend_id = attendance_obj.create({'check_out': date, 'employee_id': employee_id.id})
+                                elif not attendance_id and not checkout:
+                                    print('ddddddddddd')
+                                    attend_id = attendance_obj.create({'check_in': date, 'employee_id': employee_id.id})
+
                         if attendance.punch:
                             attendance_id = attendance_obj.search(
                                 [('employee_id', '=', employee_id.id), ('check_out', '=', str(date))])
